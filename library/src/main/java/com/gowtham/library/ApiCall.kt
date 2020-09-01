@@ -23,6 +23,8 @@ internal class ApiCall(val context: Context) {
 
     private var timeToLive: Long?=null
 
+    private var dryRun: Boolean?=null
+
     private var customData: JSONObject? = null
 
     constructor(
@@ -31,12 +33,14 @@ internal class ApiCall(val context: Context) {
         responseListener: FCMSender.ResponseListener,
         to: String?,
         timeToLive: Long?,
+        dryRun: Boolean?,
         customData: JSONObject?
     ) : this(context) {
         this.serverKey = serverKey
         this.responseListener = responseListener
         this.to = to
         this.timeToLive = timeToLive
+        this.dryRun = dryRun
         this.customData = customData
     }
 
@@ -46,6 +50,7 @@ internal class ApiCall(val context: Context) {
             jsonObject.put("to", to)
             jsonObject.put("priority","high")
             timeToLive?.let { jsonObject.put("time_to_live",it) }
+            dryRun?.let { jsonObject.put("dry_run",it) }
             customData?.let { jsonObject.put("data", it) }
             requestApi(createBody(jsonObject.toString()))
         } catch (e: Exception) {
@@ -71,13 +76,16 @@ internal class ApiCall(val context: Context) {
                 override fun onFailure(call: Call, e: IOException) {
                     e.printStackTrace()
                     GlobalScope.launch(Dispatchers.Main) {
-                        responseListener?.onResponse(e.localizedMessage!!,2)
+                        responseListener?.onFailure(188)
                     }
                 }
 
                 override fun onResponse(call: Call, response: Response) {
                     GlobalScope.launch(Dispatchers.Main) {
-                        responseListener?.onResponse(response.body.toString(), response.code)
+                        if(response.code==200)
+                            responseListener?.onSuccess(response.body?.string().toString())
+                        else
+                            responseListener?.onFailure(response.code)
                     }
                 }
             })

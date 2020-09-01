@@ -23,16 +23,22 @@ class MainActivity : AppCompatActivity(), FCMSender.ResponseListener {
         data.put("message", "Click to view..")
         data.put("type", "new_message")
         val push = FCMSender.Builder()
-            .serverKey("ServerKey")
-            .to("")    //give either topic or user registration token
+            .serverKey("your serverkey")
+            .to("/topics/myTopic") //either topic or user registration token
             .responseListener(this)
-            .setTimeToLive(30)
+//          .setTimeToLive(30) // 0 to 2,419,200 seconds (4 weeks)
+//          .setDryRun(false)  //test a request without actually sending a message.
             .setData(data)
             .build()
         push.sendPush(this)
     }
 
-    override fun onResponse(messageId: String, responseCode: Int) {
-        Toast.makeText(this, responseCode.toString(), Toast.LENGTH_SHORT).show()
+    override fun onSuccess(response: String) {
+        Log.d("onSuccess",response)
     }
+
+    override fun onFailure(errorCode: Int) {
+        Log.d("onFailure","s$errorCode")
+    }
+
 }
