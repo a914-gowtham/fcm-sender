@@ -107,6 +107,7 @@ override fun onMessageReceived(remoteMessage: RemoteMessage) {
 super.onMessageReceived(remoteMessage)
 
    val nData: Map<String,String> = remoteMessage.data
+   Log.d("TAG","Remote msg::"+ndata.toString())
         val title= nData["title"]
         val message= nData["message"]
 }}
@@ -120,6 +121,7 @@ public class FireBasePush extends FirebaseMessagingService{
         super.onMessageReceived(remoteMessage);
         
          Map<String, String> ndata = remoteMessage.getData();
+	 Log.d("TAG","Remote msg::"+ndata.toString());
          String title=nData.get("title");
          String message=nData.get("message");
 }}   
