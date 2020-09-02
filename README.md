@@ -73,33 +73,8 @@ class MainActivity : AppCompatActivity(), FCMSender.ResponseListener{
     }
 }
 ```
-## Usages
 
-### Send to Single device
-.to("user registration token")
-
-### Send to Group of devices
-Subscribe a topic on client device and send push to that topic
-```java
-FirebaseMessaging.getInstance().subscribeToTopic("/topics/testTopic2");
-```
-
-### TimeToLive
-This parameter specifies how long (in seconds) the message should be kept in FCM storage
-if the device is offline. The maximum time to live supported is 4 weeks, and the default value is 4 weeks.
-
-* use cases:
-  - Video chat incoming calls 
-  - Expiring invitation events
-  - Calendar events
-
-### DryRun
-This parameter, when set to **true**, allows developers to test a request without actually sending a message.
-
-The default value is **false.**
-
-
-### Get notification data on Client side in FirebaseMessagingService
+4 Handle notification data on Client side in FirebaseMessagingService
 * Kotlin
 ```kotlin
 class FireBasePush : FirebaseMessagingService() {
@@ -126,6 +101,32 @@ public class FireBasePush extends FirebaseMessagingService{
          String message=nData.get("message");
 }}   
 ```
+
+## Usages
+
+### Send to Single device
+.to("user registration token")
+
+### Send to Group of devices
+Subscribe a topic on client device and send push to that topic
+```java
+FirebaseMessaging.getInstance().subscribeToTopic("/topics/testTopic2");
+```
+
+### TimeToLive
+This parameter specifies how long (in seconds) the message should be kept in FCM storage
+if the device is offline. The maximum time to live supported is 4 weeks, and the default value is 4 weeks.
+
+* use cases:
+  - Video chat incoming calls 
+  - Expiring invitation events
+  - Calendar events
+
+### DryRun
+This parameter, when set to **true**, allows developers to test a request without actually sending a message.
+
+The default value is **false.**
+
   
 ## Reference
 https://firebase.google.com/docs/cloud-messaging/http-server-ref#table1
