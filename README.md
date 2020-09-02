@@ -9,6 +9,8 @@
 
 1. Include the library as local library project.
 
++ Setup firebase messsaging [Refer this](https://firebase.google.com/docs/cloud-messaging/android/client?authuser=1)
+
 + Add the dependency to your app `build.gradle` file
  ```gradle
  dependencies {
@@ -95,6 +97,7 @@ if the device is offline. The maximum time to live supported is 4 weeks, and the
 This parameter, when set to **true**, allows developers to test a request without actually sending a message.
 
 The default value is **false.**
+
 
 ### Get notification data on Client side in FirebaseMessagingService
 * Kotlin
