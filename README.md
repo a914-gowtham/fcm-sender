@@ -33,7 +33,7 @@ allprojects {
         data.put("type", "new_message")
         
          val push = FCMSender.Builder()
-            .serverKey("your serverkey")
+            .serverKey("your firebase serverkey")
             .to("/topics/myTopic") //use either topic or user registration token
             .responseListener(this)
 //          .setTimeToLive(30) // 0 to 2,419,200 seconds (4 weeks)
@@ -51,7 +51,7 @@ allprojects {
         data.put("type", "new_message");
         
        FCMSender fcmSender= new FCMSender.Builder()
-               .serverKey("your serverkey")
+               .serverKey("your firebase serverkey")
                .to("/topics/myTopic") //use either topic or user registration token
                .responseListener(this)
 //             .setTimeToLive(30) // 0 to 2,419,200 seconds (4 weeks)
