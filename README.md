@@ -4,7 +4,7 @@
 
 ##### Push Notification Library for Android
 
-## Usage
+## How to Use
 *For a working implementation, please have a look at the Sample Project*
 
 1. Include the library as local library project.
