@@ -56,7 +56,7 @@ allprojects {
                .responseListener(this)
 //             .setTimeToLive(30) // 0 to 2,419,200 seconds (4 weeks)
 //             .setDryRun(false)  //test a request without actually sending a message.
-               .setData(new JSONObject())
+               .setData(data)
                .build();
        fcmSender.sendPush(this);
 ```
