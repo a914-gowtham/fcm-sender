@@ -1,10 +1,10 @@
-package com.gowtham.fcm_sender_kotlin
+package com.fcmsender.fcm_sender_kotlin
 
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.gowtham.library.FCMSender
+import com.fcmsender.FCMSender
 import kotlinx.android.synthetic.main.activity_main.*
 import org.json.JSONObject
 
@@ -21,10 +21,10 @@ class MainActivity : AppCompatActivity(), FCMSender.ResponseListener {
         val data = JSONObject()
         data.put("title", "Message from Jon")
         data.put("message", "Click to view..")
-        data.put("type", "new_message")
+        data.put("type", "new_logged_in")
         val push = FCMSender.Builder()
-            .serverKey("your serverkey")
-            .to("/topics/myTopic") //either topic or user registration token
+            .serverKey("Server key")
+            .to("topic/testTopic") //either topic or user registration token
             .responseListener(this)
 //          .setTimeToLive(30) // 0 to 2,419,200 seconds (4 weeks)
 //          .setDryRun(false)  //test a request without actually sending a message.
@@ -35,10 +35,12 @@ class MainActivity : AppCompatActivity(), FCMSender.ResponseListener {
 
     override fun onSuccess(response: String) {
         Log.d("onSuccess",response)
+        Toast.makeText(this, "onSuccess", Toast.LENGTH_SHORT).show()
     }
 
     override fun onFailure(errorCode: Int) {
         Log.d("onFailure","s$errorCode")
+        Toast.makeText(this, "onFailure", Toast.LENGTH_SHORT).show()
     }
 
 }
