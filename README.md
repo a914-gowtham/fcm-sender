@@ -34,7 +34,8 @@ allprojects {
         
          val push = FCMSender.Builder()
             .serverKey("your firebase serverkey")
-            .to("/topics/myTopic") //use either topic or user registration token
+            .toTokenOrTopic("topic/TestTopic") //either topic or user registration token
+//          .toMultipleTokens(listOfToken)
             .responseListener(this)
 //          .setTimeToLive(30) // 0 to 2,419,200 seconds (4 weeks)
 //          .setDryRun(false)  //test a request without actually sending a message.
@@ -52,7 +53,8 @@ allprojects {
         
        FCMSender fcmSender= new FCMSender.Builder()
                .serverKey("your firebase serverkey")
-               .to("/topics/myTopic") //use either topic or user registration token
+               .toTokenOrTopic("/topics/myTopic") //use either topic or user registration token
+//             .toMultipleTokens(listOfToken)
                .responseListener(this)
 //             .setTimeToLive(30) // 0 to 2,419,200 seconds (4 weeks)
 //             .setDryRun(false)  //test a request without actually sending a message.
@@ -68,7 +70,7 @@ class MainActivity : AppCompatActivity(), FCMSender.ResponseListener{
         Log.d("onSuccess",response)
     }
 
-    override fun onFailure(errorCode: Int) {
+    override fun onFailure(errorCode: Int,message: String) {
         Log.d("onFailure","ErrorCode::$errorCode")
     }
 }
@@ -105,7 +107,10 @@ public class FireBasePush extends FirebaseMessagingService{
 ## Usages
 
 ### Send to Single device
-.to("user registration token")
+.toTokenOrTopic("user registration token")
+
+### Send to Multiple devices
+.toMultipleTokens(listOfTokens)
 
 ### Send to Group of devices
 Subscribe a topic on client device and send push to that topic
