@@ -23,8 +23,9 @@ class MainActivity : AppCompatActivity(), FCMSender.ResponseListener {
         data.put("message", "Click to view..")
         data.put("type", "new_logged_in")
         val push = FCMSender.Builder()
-            .serverKey("Server key")
-            .to("topic/testTopic") //either topic or user registration token
+            .serverKey("Your server key")
+            .toTokenOrTopic("topic/TestTopic") //either topic or user registration token
+//          .toMultipleTokens(listOfToken)
             .responseListener(this)
 //          .setTimeToLive(30) // 0 to 2,419,200 seconds (4 weeks)
 //          .setDryRun(false)  //test a request without actually sending a message.
@@ -38,8 +39,8 @@ class MainActivity : AppCompatActivity(), FCMSender.ResponseListener {
         Toast.makeText(this, "onSuccess", Toast.LENGTH_SHORT).show()
     }
 
-    override fun onFailure(errorCode: Int) {
-        Log.d("onFailure","s$errorCode")
+    override fun onFailure(errorCode: Int,message: String) {
+        Log.d("onFailure","$errorCode $message")
         Toast.makeText(this, "onFailure", Toast.LENGTH_SHORT).show()
     }
 

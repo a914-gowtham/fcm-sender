@@ -9,6 +9,7 @@ import kotlinx.coroutines.launch
 import okhttp3.*
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody.Companion.toRequestBody
+import org.json.JSONArray
 import org.json.JSONObject
 import java.io.IOException
 import java.util.concurrent.TimeUnit
@@ -19,11 +20,13 @@ internal class ApiCall(val context: Context) {
 
     private var responseListener: FCMSender.ResponseListener? = null
 
-    private var to: String? = null
+    private var toTokenOrTopic: String? = null
 
     private var timeToLive: Long?=null
 
     private var dryRun: Boolean?=null
+
+    private var toMultipleToken: ArrayList<String>?=null
 
     private var customData: JSONObject? = null
 
@@ -31,14 +34,15 @@ internal class ApiCall(val context: Context) {
         context: Context,
         serverKey: String,
         responseListener: FCMSender.ResponseListener,
-        to: String?,
+        toTokenOrTopic: String?,
+        toMultipleToken: ArrayList<String>?,
         timeToLive: Long?,
         dryRun: Boolean?,
-        customData: JSONObject?
-    ) : this(context) {
+        customData: JSONObject?) : this(context) {
         this.serverKey = serverKey
         this.responseListener = responseListener
-        this.to = to
+        this.toTokenOrTopic = toTokenOrTopic
+        this.toMultipleToken = toMultipleToken
         this.timeToLive = timeToLive
         this.dryRun = dryRun
         this.customData = customData
@@ -47,7 +51,10 @@ internal class ApiCall(val context: Context) {
     fun sendPush() {
         try {
             val jsonObject = JSONObject()
-            jsonObject.put("to", to)
+            if (toTokenOrTopic!=null)
+                jsonObject.put("to", toTokenOrTopic)
+            else
+                jsonObject.put("registration_ids", JSONArray(toMultipleToken))
             jsonObject.put("priority","high")
             timeToLive?.let { jsonObject.put("time_to_live",it) }
             dryRun?.let { jsonObject.put("dry_run",it) }
@@ -76,7 +83,7 @@ internal class ApiCall(val context: Context) {
                 override fun onFailure(call: Call, e: IOException) {
                     e.printStackTrace()
                     GlobalScope.launch(Dispatchers.Main) {
-                        responseListener?.onFailure(188)
+                        responseListener?.onFailure(188,e.message.toString())
                     }
                 }
 
@@ -85,7 +92,7 @@ internal class ApiCall(val context: Context) {
                         if(response.code==200)
                             responseListener?.onSuccess(response.body?.string().toString())
                         else
-                            responseListener?.onFailure(response.code)
+                            responseListener?.onFailure(response.code,response.body?.string().toString())
                     }
                 }
             })
