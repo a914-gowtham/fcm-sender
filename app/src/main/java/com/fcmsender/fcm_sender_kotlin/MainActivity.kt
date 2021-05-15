@@ -31,7 +31,7 @@ class MainActivity : AppCompatActivity(), FCMSender.ResponseListener {
 //          .setDryRun(false)  //test a request without actually sending a message.
             .setData(data)
             .build()
-        push.sendPush(this)
+        push.sendPush()
     }
 
     override fun onSuccess(response: String) {

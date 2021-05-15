@@ -17,7 +17,7 @@ class FCMSender(
         fun onFailure(errorCode: Int,message: String)
     }
 
-    fun sendPush(context: Context) {
+    fun sendPush() {
         try {
             when {
                 serverKey.isNullOrEmpty() -> {
@@ -30,7 +30,7 @@ class FCMSender(
                 customData == null -> throw NullPointerException("data is null")
                 else -> {
                     val apiCall = ApiCall(
-                        context, serverKey, listener,
+                         serverKey, listener,
                         toTokenOrTopic,toMultipleToken, timeToLive, dryRun, customData
                     )
                     apiCall.sendPush()

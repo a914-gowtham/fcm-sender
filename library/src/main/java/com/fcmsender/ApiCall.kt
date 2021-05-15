@@ -1,6 +1,5 @@
 package com.fcmsender
 
-import android.content.Context
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Dispatchers.IO
@@ -14,7 +13,7 @@ import org.json.JSONObject
 import java.io.IOException
 import java.util.concurrent.TimeUnit
 
-internal class ApiCall(val context: Context) {
+internal class ApiCall {
 
     private var serverKey: String? = null
 
@@ -31,14 +30,13 @@ internal class ApiCall(val context: Context) {
     private var customData: JSONObject? = null
 
     constructor(
-        context: Context,
         serverKey: String,
         responseListener: FCMSender.ResponseListener,
         toTokenOrTopic: String?,
         toMultipleToken: ArrayList<String>?,
         timeToLive: Long?,
         dryRun: Boolean?,
-        customData: JSONObject?) : this(context) {
+        customData: JSONObject?) {
         this.serverKey = serverKey
         this.responseListener = responseListener
         this.toTokenOrTopic = toTokenOrTopic
