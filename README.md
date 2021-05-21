@@ -1,5 +1,5 @@
 [![](https://jitpack.io/v/a914-gowtham/fcm-sender.svg)](https://jitpack.io/#a914-gowtham/fcm-sender)
-[![Maven Central](https://img.shields.io/maven-central/v/io.github.a914-gowtham/fcm-sender.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22io.github.a914-gowtham%22%20AND%20a:%fcm-sender%22)
+[![Maven Central](https://img.shields.io/maven-central/v/io.github.a914-gowtham/fcm-sender.svg?label=Maven%20Central)](https://search.maven.org/artifact/io.github.a914-gowtham/fcm-sender/1.0.33/aar)
 
 # FCM-Sender
 
