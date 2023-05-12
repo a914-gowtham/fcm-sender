@@ -3,7 +3,8 @@
 
 # FCM-Sender
 
-##### Push Notification Library for Android
+##### Push Notification Library for Android. It uses FCM rest api provided by Firebase
+https://firebase.google.com/docs/cloud-messaging/send-message
 
 ## How to Use
 *For a working implementation, please have a look at the Sample Project*
